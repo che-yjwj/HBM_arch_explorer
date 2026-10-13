@@ -1,0 +1,196 @@
+<div id="hbm-screen-example" class="hbm-demo" aria-label="HBM Architecture Explorer 화면 예시">
+  <style>
+    #hbm-screen-example{--app-bg:light-dark(#ffffff,#171a21);--app-panel:light-dark(#f6f8fa,#202630);--app-text:light-dark(#182432,#edf1f7);--app-sub:light-dark(#526170,#afbdd0);--app-line:light-dark(#d9e1e9,#3b4656);--app-flow:light-dark(#076d83,#6ed3e6);--app-soft:light-dark(#e9f6f8,#183e47);--app-warning:light-dark(#89551a,#f0c482);--app-error:light-dark(#ae2333,#ffb1b9);color:var(--app-text);background:var(--app-bg);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;border:1px solid var(--app-line);border-radius:12px;overflow:hidden;color-scheme:light dark}
+    #hbm-screen-example *{box-sizing:border-box}
+    #hbm-screen-example button,#hbm-screen-example input{font:inherit;color:inherit}
+    #hbm-screen-example button{cursor:pointer;border:1px solid var(--app-line);background:var(--app-bg);border-radius:7px;padding:8px 12px}
+    #hbm-screen-example button:hover{background:var(--app-panel)}
+    #hbm-screen-example button:focus-visible,#hbm-screen-example input:focus-visible{outline:3px solid var(--app-flow);outline-offset:3px}
+    #hbm-screen-example .app-head{padding:20px 24px 15px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;padding-right:100px}
+    #hbm-screen-example .brand{font-size:17px;font-weight:500;letter-spacing:-.3px}
+    #hbm-screen-example .subtle{color:var(--app-sub);font-size:12px}
+    #hbm-screen-example .tag{padding:3px 8px;background:var(--app-panel);border-radius:5px;font-size:12px}
+    #hbm-screen-example .workload{padding:12px 24px;border-top:1px solid var(--app-line);border-bottom:1px solid var(--app-line);display:flex;gap:14px;align-items:center;flex-wrap:wrap;background:var(--app-panel)}
+    #hbm-screen-example label{display:flex;align-items:center;gap:8px}
+    #hbm-screen-example input{width:88px;min-width:0;padding:7px 9px;background:var(--app-bg);border:1px solid var(--app-line);border-radius:6px;font-variant-numeric:tabular-nums}
+    #hbm-screen-example .summary{padding:16px 24px;display:flex;gap:24px;flex-wrap:wrap;align-items:baseline}
+    #hbm-screen-example .total{font-size:23px;font-weight:500;font-variant-numeric:tabular-nums}
+    #hbm-screen-example .summary button{margin-left:auto}
+    #hbm-screen-example .workspace{display:grid;grid-template-columns:minmax(0,1fr) 240px;border-top:1px solid var(--app-line)}
+    #hbm-screen-example .map{min-width:0;padding:20px 24px 16px}
+    #hbm-screen-example .map-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:30px}
+    #hbm-screen-example .map-head strong{font-weight:500}
+    #hbm-screen-example .boundary{border:1px solid var(--app-line);border-radius:10px;padding:20px 16px 12px}
+    #hbm-screen-example .rank-label{color:var(--app-sub);font-size:12px;margin-bottom:22px}
+    #hbm-screen-example .nodes{display:grid;grid-template-columns:minmax(0,1fr) 30px minmax(0,1fr) 30px minmax(0,1fr);align-items:center;gap:3px}
+    #hbm-screen-example .node{display:flex;min-width:0;min-height:115px;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:12px 4px;text-align:center;border-radius:9px}
+    #hbm-screen-example .node[aria-pressed="true"]{outline:2px solid var(--app-flow);outline-offset:2px;background:var(--app-soft)}
+    #hbm-screen-example .node-name{font-weight:500;font-size:15px}
+    #hbm-screen-example .node-value{font-size:12px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+    #hbm-screen-example .node-role{font-size:12px;color:var(--app-sub)}
+    #hbm-screen-example .arrow{text-align:center;color:var(--app-line);font-size:25px;font-weight:400}
+    #hbm-screen-example .arrow.active{color:var(--app-flow)}
+    #hbm-screen-example .flow-labels{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:15px 0 5px;text-align:center;font-size:12px;color:var(--app-sub)}
+    #hbm-screen-example .return-path{display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:center;margin:12px 0;color:var(--app-sub);font-size:12px}
+    #hbm-screen-example .return-path span{border-bottom:1px solid var(--app-line);padding:5px 0}
+    #hbm-screen-example .return-path span.active{color:var(--app-flow);border-bottom:2px solid var(--app-flow)}
+    #hbm-screen-example .flow-description{margin-top:15px;min-height:44px;font-size:13px}
+    #hbm-screen-example .steps{display:flex;gap:7px;flex-wrap:wrap;margin-top:20px}
+    #hbm-screen-example .steps button{flex:1;min-width:110px;display:flex;flex-direction:column;text-align:left;font-size:12px;gap:2px}
+    #hbm-screen-example .steps button[aria-pressed="true"]{background:var(--app-soft);border-color:var(--app-flow)}
+    #hbm-screen-example .inspector{padding:22px 20px;background:var(--app-panel);border-left:1px solid var(--app-line);min-width:0}
+    #hbm-screen-example .inspector h3{margin:5px 0 8px;font-size:16px;font-weight:500}
+    #hbm-screen-example .inspector p{margin:0 0 20px;font-size:13px;color:var(--app-sub)}
+    #hbm-screen-example .inspector label{display:block;font-size:13px;margin:15px 0}
+    #hbm-screen-example .field-row{display:flex;align-items:center;gap:8px;margin-top:6px}
+    #hbm-screen-example .field-row input{width:110px;max-width:100%}
+    #hbm-screen-example .inspector .small-action{width:100%;margin-top:10px}
+    #hbm-screen-example .impact{padding-top:16px;margin-top:20px;border-top:1px solid var(--app-line);font-size:12px}
+    #hbm-screen-example .bottom{padding:14px 24px;border-top:1px solid var(--app-line)}
+    #hbm-screen-example details+details{margin-top:10px}
+    #hbm-screen-example summary{cursor:pointer;font-size:13px}
+    #hbm-screen-example table{width:100%;border-collapse:collapse;margin-top:12px;font-size:12px;font-variant-numeric:tabular-nums}
+    #hbm-screen-example th,#hbm-screen-example td{padding:8px 3px;text-align:right;border-bottom:1px solid var(--app-line);font-weight:400}
+    #hbm-screen-example th:first-child,#hbm-screen-example td:first-child{text-align:left}
+    #hbm-screen-example .note{margin-top:14px;color:var(--app-sub);font-size:12px}
+    #hbm-screen-example .error{color:var(--app-error)}
+    #hbm-screen-example .reason{margin-top:10px;font-size:13px;overflow-wrap:anywhere}
+    #hbm-screen-example.below .workspace{grid-template-columns:1fr}
+    #hbm-screen-example.below .inspector{border-left:0;border-top:1px solid var(--app-line)}
+    @media(max-width:720px){#hbm-screen-example .workspace{grid-template-columns:1fr}#hbm-screen-example .inspector{border-left:0;border-top:1px solid var(--app-line)}#hbm-screen-example .app-head,#hbm-screen-example .workload,#hbm-screen-example .summary,#hbm-screen-example .map,#hbm-screen-example .bottom{padding-left:14px;padding-right:14px}#hbm-screen-example .app-head{padding-right:90px}#hbm-screen-example .summary{gap:10px 18px}#hbm-screen-example .summary button{margin-left:0}#hbm-screen-example .nodes{grid-template-columns:minmax(0,1fr) 18px minmax(0,1fr) 18px minmax(0,1fr)}#hbm-screen-example .boundary{padding:12px 8px}#hbm-screen-example .node{min-height:104px}#hbm-screen-example .node-name{font-size:13px}#hbm-screen-example .node-value,#hbm-screen-example .node-role{font-size:11px}#hbm-screen-example .arrow{font-size:20px}#hbm-screen-example .shape-caption{width:100%}}
+  </style>
+  <header class="app-head"><span class="brand">HBM Architecture Explorer</span><span class="tag">GEMM 화면 예시</span></header>
+  <div class="workload">
+    <span>GEMM</span>
+    <label>M <input data-shape="m" type="number" min="1" max="8192" value="4096" aria-label="M 출력 행 수"></label>
+    <label>N <input data-shape="n" type="number" min="1" max="8192" value="4096" aria-label="N 출력 열 수"></label>
+    <label>K <input data-shape="k" type="number" min="1" max="8192" value="4096" aria-label="K 축약 차원"></label>
+    <span class="subtle shape-caption">BF16 · 타일 128³ · 단일 Rank</span>
+  </div>
+  <div class="summary" aria-live="polite"><span>추정 시간 <span class="total" data-total></span></span><span class="subtle" data-bottleneck></span><button type="button" data-pin>기준으로 고정</button></div>
+  <div class="workspace">
+    <section class="map" aria-label="고정 하드웨어 구조와 데이터 흐름">
+      <div class="map-head"><strong>데이터가 이동하는 곳</strong><span class="subtle">가상 Accelerator</span></div>
+      <div class="boundary">
+        <div class="rank-label">Rank 0 · 논리적 자원 구조</div>
+        <div class="nodes">
+          <button class="node" type="button" data-node="hbm" aria-pressed="true"><span class="node-name">HBM</span><span class="node-role">원본·결과 저장</span><span class="node-value" data-hbm></span></button>
+          <span class="arrow" data-arrow="load" aria-label="HBM에서 SRAM으로 읽기">→</span>
+          <button class="node" type="button" data-node="sram" aria-pressed="false"><span class="node-name">SRAM</span><span class="node-role">타일 보관·재사용</span><span class="node-value" data-sram></span></button>
+          <span class="arrow" data-arrow="compute" aria-label="SRAM에서 Compute로 입력">→</span>
+          <button class="node" type="button" data-node="compute" aria-pressed="false"><span class="node-name">Compute</span><span class="node-role">행렬 연산</span><span class="node-value" data-compute></span></button>
+        </div>
+        <div class="flow-labels"><span data-read-label></span><span>A/B 타일 입력 →</span></div>
+        <div class="return-path"><span data-return="store">← 결과 C 저장</span><span data-return="compute">← 누산값 읽기·쓰기 →</span></div>
+      </div>
+      <div class="flow-description" data-description aria-live="polite"></div>
+      <div class="steps" aria-label="분석 단계">
+        <button type="button" data-step="0" aria-pressed="true"><span>1 · A/B 읽기</span><span data-time="0"></span></button>
+        <button type="button" data-step="1" aria-pressed="false"><span>2 · 행렬 계산</span><span data-time="1"></span></button>
+        <button type="button" data-step="2" aria-pressed="false"><span>3 · C 저장</span><span data-time="2"></span></button>
+      </div>
+      <div class="note">강조 화살표: 선택 단계의 경로 · 반복 이동은 합산</div>
+    </section>
+    <aside class="inspector" aria-label="선택한 자원의 사양 설정"><span class="subtle">선택한 자원</span><div data-inspector></div><div class="impact" data-impact aria-live="polite"></div></aside>
+  </div>
+  <div class="bottom">
+    <details data-comparison><summary>기준안과 현재안 비교 <span data-delta></span></summary><div data-compare-body></div></details>
+    <details data-reason><summary>선택 단계 자세히 보기</summary><div class="reason" data-reason-body></div></details>
+    <div class="note">순차 실행의 단순 모델 · 효율 0.7 · 실제 제품 성능을 뜻하지 않음</div>
+  </div>
+  <script>
+  (() => {
+    const root = document.getElementById('hbm-screen-example');
+    const find = s => root.querySelector(s);
+    const saved = window.openai?.widgetState?.modelContent;
+    const defaults = {m:4096,n:4096,k:4096,hbm:1000,sram:10000,capacity:32,compute:200,step:0,node:'hbm'};
+    const state = {...defaults};
+    let baseline = window.openai?.widgetState?.privateContent?.baseline || null;
+    if(!baseline?.result?.valid || !Number.isFinite(baseline.result.total) || baseline.result.total<=0 || !baseline.inputs)baseline=null;
+    const design = {layout:'오른쪽',roles:true};
+    if(saved && saved.screen==='gemm-example') {
+      for(const key of ['m','n','k','hbm','sram','capacity','compute']) if(Number.isFinite(saved[key]) && saved[key]>0) state[key]=saved[key];
+      if(['hbm','sram','compute'].includes(saved.node))state.node=saved.node;
+      if([0,1,2].includes(saved.step))state.step=saved.step;
+    }
+    const descriptions = ['HBM의 A/B를 출력 타일마다 읽어 SRAM에 전달합니다.','SRAM의 타일을 사용해 Compute에서 계산하고 누산값을 갱신합니다.','SRAM의 최종 결과 C를 HBM으로 한 번 저장합니다.'];
+    const bytes = b => b>=1e9 ? (b/1e9).toFixed(2)+' GB' : b>=1048576 ? (b/1048576).toFixed(2)+' MiB' : b>=1024 ? (b/1024).toFixed(1)+' KiB' : b+' bytes';
+    const ms = s => (s*1000).toFixed(3)+' ms';
+    function analyze(s) {
+      if(!['m','n','k'].every(k=>Number.isInteger(s[k])&&s[k]>=1&&s[k]<=8192) || !['hbm','sram','capacity','compute'].every(k=>Number.isFinite(s[k])&&s[k]>0)) return {valid:false,error:'입력을 확인해 주세요. 이 예시의 M/N/K는 1~8192 정수입니다.'};
+      const {m,n,k}=s, i=Math.ceil(m/128), j=Math.ceil(n/128), l=Math.ceil(k/128);
+      const read=2*(m*k*j+k*n*i),write=2*m*n,flops=2*m*n*k;
+      const st=read+4*m*n*(2*l-1),working=2*(Math.min(m,128)*Math.min(k,128)+Math.min(k,128)*Math.min(n,128))+4*Math.min(m,128)*Math.min(n,128);
+      if(s.capacity*1048576<working)return {valid:false,error:'SRAM 부족: 필요 '+bytes(working)+', 설정 '+bytes(s.capacity*1048576)};
+      const computeTime=flops/(s.compute*1e12*.7),sramTime=st/(s.sram*1e9*.7);
+      const times=[read/(s.hbm*1e9*.7),Math.max(computeTime,sramTime),write/(s.hbm*1e9*.7)];
+      const total=times.reduce((a,b)=>a+b,0), gains={};
+      gains.hbm=(times[0]+times[2])/2;
+      gains.compute=times[1]-Math.max(computeTime/2,sramTime);
+      gains.sram=times[1]-Math.max(computeTime,sramTime/2);
+      const best=Object.keys(gains).reduce((a,b)=>gains[a]>=gains[b]?a:b);
+      return {valid:true,read,write,flops,working,st,times,total,computeTime,sramTime,gains,best};
+    }
+    function persist(){window.openai?.setWidgetState?.({modelContent:{screen:'gemm-example',...state},privateContent:{baseline}})?.catch(()=>{});}
+    function inspector(){
+      const configs={hbm:{title:'HBM',role:'A/B와 결과 C를 저장하는 메모리',fields:[['hbm','대역폭','GB/s']],boost:['hbm','대역폭 2배 비교']},sram:{title:'SRAM',role:'타일과 누산값을 보관하는 로컬 메모리',fields:[['capacity','용량','MiB'],['sram','대역폭','GB/s']],boost:['sram','대역폭 2배 비교']},compute:{title:'Compute',role:'BF16 입력 · FP32 누산 행렬 연산',fields:[['compute','연산 성능','TFLOP/s']],boost:['compute','연산 성능 2배 비교']}};
+      const c=configs[state.node];
+      find('[data-inspector]').innerHTML='<h3>'+c.title+'</h3><p>'+c.role+'</p>'+c.fields.map(([key,label,unit])=>'<label>'+label+'<span class="field-row"><input type="number" data-spec="'+key+'" min="0.001" step="any" value="'+state[key]+'" aria-label="'+c.title+' '+label+'"><span>'+unit+'</span></span></label>').join('')+'<button type="button" class="small-action" data-boost="'+c.boost[0]+'">'+c.boost[1]+'</button>';
+    }
+    function render(){
+      const r=analyze(state);
+      root.classList.toggle('below',design.layout==='아래');
+      root.querySelectorAll('.node-role').forEach(el=>el.hidden=!design.roles);
+      root.querySelectorAll('[data-node]').forEach(el=>el.setAttribute('aria-pressed',String(el.dataset.node===state.node)));
+      root.querySelectorAll('[data-step]').forEach(el=>el.setAttribute('aria-pressed',String(Number(el.dataset.step)===state.step)));
+      find('[data-hbm]').textContent=state.hbm+' GB/s';find('[data-sram]').textContent=state.capacity+' MiB';find('[data-compute]').textContent=state.compute+' TFLOP/s';
+      find('[data-arrow="load"]').classList.toggle('active',r.valid&&state.step===0);
+      find('[data-arrow="compute"]').classList.toggle('active',r.valid&&state.step===1);
+      find('[data-return="store"]').classList.toggle('active',r.valid&&state.step===2);
+      find('[data-return="compute"]').classList.toggle('active',r.valid&&state.step===1);
+      find('[data-pin]').disabled=!r.valid;
+      find('[data-pin]').textContent=baseline?'기준 교체':'기준으로 고정';
+      find('[data-total]').textContent=r.valid?ms(r.total):'입력 확인 필요';
+      find('[data-bottleneck]').textContent=r.valid?'개선 후보 · '+{hbm:'HBM BW',sram:'SRAM BW',compute:'Compute'}[r.best]:'';
+      find('[data-description]').textContent=r.valid?descriptions[state.step]:r.error;
+      find('[data-description]').classList.toggle('error',!r.valid);
+      find('[data-read-label]').textContent=r.valid?'A/B 누적 '+bytes(r.read):'A/B 읽기';
+      root.querySelectorAll('[data-time]').forEach(el=>el.textContent=r.valid?ms(r.times[Number(el.dataset.time)]):'—');
+      find('[data-impact]').textContent=r.valid?(state.node==='sram'?'필요 타일 용량 '+bytes(r.working)+' / 설정 '+state.capacity+' MiB':'현재 단계 '+ms(r.times[state.step])+' · '+(state.step===1?'이 단계 제한: '+(r.computeTime>=r.sramTime?'Compute':'SRAM BW'):'이 단계 제한: HBM BW')):'';
+      const formulas=r.valid?['HBM 읽기 '+bytes(r.read)+' ÷ ('+state.hbm+' GB/s × 0.7) = '+ms(r.times[0]),'max(연산 '+ms(r.computeTime)+', SRAM 접근 '+ms(r.sramTime)+') = '+ms(r.times[1]),'HBM 쓰기 '+bytes(r.write)+' ÷ ('+state.hbm+' GB/s × 0.7) = '+ms(r.times[2])]:[];
+      find('[data-reason-body]').textContent=r.valid?formulas[state.step]:r.error;
+      if(baseline&&r.valid){
+        const same=state.m===baseline.inputs.m&&state.n===baseline.inputs.n&&state.k===baseline.inputs.k;
+        const delta=(1-r.total/baseline.result.total)*100;
+        find('[data-delta]').textContent=same?'· '+(delta>=0?delta.toFixed(1)+'% 단축':Math.abs(delta).toFixed(1)+'% 증가'):'· 워크로드도 변경됨';
+        const rows=[['HBM BW',baseline.inputs.hbm+' GB/s',state.hbm+' GB/s'],['Compute',baseline.inputs.compute+' TFLOP/s',state.compute+' TFLOP/s'],['추정 시간',ms(baseline.result.total),ms(r.total)],['HBM 이동량',bytes(baseline.result.read+baseline.result.write),bytes(r.read+r.write)]];
+        find('[data-compare-body]').innerHTML='<table><thead><tr><th>비교 항목</th><th>기준안</th><th>현재안</th></tr></thead><tbody>'+rows.map(row=>'<tr>'+row.map(x=>'<td>'+x+'</td>').join('')+'</tr>').join('')+'</tbody></table>';
+      } else {find('[data-delta]').textContent='';find('[data-compare-body]').textContent=r.valid?'아직 고정한 기준안이 없습니다.':r.error;}
+    }
+    root.addEventListener('click',e=>{
+      const node=e.target.closest('[data-node]'),step=e.target.closest('[data-step]'),boost=e.target.closest('[data-boost]');
+      if(node){state.node=node.dataset.node;inspector();render();persist();}
+      if(step){state.step=Number(step.dataset.step);render();persist();}
+      if(e.target.closest('[data-pin]')){const r=analyze(state);if(r.valid){baseline={inputs:{...state},result:r};find('[data-pin]').textContent='기준 교체';find('[data-comparison]').open=true;render();persist();}}
+      if(boost){if(!baseline){const r=analyze(state);if(r.valid)baseline={inputs:{...state},result:r};}const key=boost.dataset.boost;state[key]*=2;inspector();find('[data-comparison]').open=true;render();persist();}
+    });
+    root.addEventListener('input',e=>{
+      const key=e.target.dataset.shape||e.target.dataset.spec;if(!key)return;
+      state[key]=e.target.value===''?NaN:Number(e.target.value);render();persist();
+    });
+    root.querySelectorAll('[data-shape]').forEach(el=>el.value=state[el.dataset.shape]);
+    inspector();render();
+    window.addEventListener('openai:set_globals',e=>{
+      const s=e.detail?.globals?.widgetState?.modelContent;
+      if(!s||s.screen!=='gemm-example')return;
+      const b=e.detail?.globals?.widgetState?.privateContent?.baseline;
+      baseline=b?.result?.valid&&Number.isFinite(b.result.total)&&b.result.total>0&&b.inputs?b:null;
+      for(const key of ['m','n','k','hbm','sram','capacity','compute'])if(Number.isFinite(s[key])&&s[key]>0)state[key]=s[key];
+      if(['hbm','sram','compute'].includes(s.node))state.node=s.node;
+      if([0,1,2].includes(s.step))state.step=s.step;
+      root.querySelectorAll('[data-shape]').forEach(el=>el.value=state[el.dataset.shape]);inspector();render();
+    });
+    if(globalThis.Tweak){const tweak=new Tweak({container:root,onChange:render});tweak.addSelect(design,'layout',{label:'자원 설정 위치',options:['오른쪽','아래']});tweak.addToggle(design,'roles',{label:'자원 역할 표시'});}
+  })();
+  </script>
+</div>
